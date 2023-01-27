@@ -22,6 +22,17 @@ gameRoute.post("/", async (req, res) => {
     } catch (e) { }
 });
 
+gameRoute.patch("/", async (req, res) => {
+    const { name, difficultyLevel, id, score } = req.body;
+    console.log(' name, difficultyLevel, id :', name, difficultyLevel, id)
+    try {
+        let user = new gameModel.findByIdAndUpdate({ _id: id }, { name, difficultyLevel, score });
+        return res
+            .status(200)
+            .send({ message: "Next Level", data: user });
+    } catch (e) { }
+});
+
 gameRoute.get("/randomwords", async (req, res) => {
     const randomArr = [
         "ability",
@@ -187,13 +198,7 @@ gameRoute.get("/randomwords", async (req, res) => {
         "yourself",
     ];
     let randomWords =
-        randomArr[Math.floor(Math.random() * randomArr.length)] +
-        " " +
-        randomArr[Math.floor(Math.random() * randomArr.length)] +
-        " " +
-        randomArr[Math.floor(Math.random() * randomArr.length)] +
-        " " +
-        randomArr[Math.floor(Math.random() * randomArr.length)];
+        randomArr[Math.floor(Math.random() * randomArr.length)]
     res.send({ randomWords });
 });
 
